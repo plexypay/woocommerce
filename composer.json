@@ -1,0 +1,16 @@
+{
+    "version": "1.0.0",
+    "name": "foropay/woocommerce",
+    "description": "ForoPay payments gateway for Woocommerce",
+    "type": "wordpress-plugin",
+    "require": {
+        "foropay/foropay-sdk-php": "^1.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nurbol Sarsenbayev",
+            "email": "nurbol.sarsenbayev@foropay.eu"
+        }
+    ]
+}

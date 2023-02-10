@@ -1,0 +1,8 @@
+# Ignore build files
+build/*
+
+# Mac OS X dumps these all over the place.
+.DS_Store
+
+# Ignore the /vendor/ directory for people using composer
+/vendor/
