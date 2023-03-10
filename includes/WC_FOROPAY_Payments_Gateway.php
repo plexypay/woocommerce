@@ -257,14 +257,17 @@ class WC_FOROPAY_Payments_Gateway extends WC_Payment_Gateway {
             $current_url = home_url( add_query_arg( array(), $wp->request ) );
             $order = wc_get_order( $order_id );
 
+            $success = $this->helpers->get_link( $this->get_option('success_url'), $this->get_return_url($order) );
+            $failure = $this->helpers->get_link( $this->get_option('failure_url'), get_rest_url(null, 'foropay/failure-page') );
+
             $result = $this->foropay->create_payment_session([
                 'terminalId' => $this->terminal_id,
                 'transactionType' => $this->get_option('transaction_type'),
                 'locale' => 'en-gb', 
                 'urls' => [
                     'cancel' => $current_url,
-                    'success' => $this->helpers->get_link( $this->get_option('success_url'), $this->get_return_url($order) ),
-                    'failure' => $this->helpers->get_link( $this->get_option('failure_url'), get_rest_url(null, 'foropay/failure-page') ),
+                    'success' => $success,
+                    'failure' => $failure,
                     'callback' => get_rest_url(null, 'foropay/callback')
                 ],
                 'customerDetails' => $this->helpers->customer_details($order),
@@ -273,7 +276,11 @@ class WC_FOROPAY_Payments_Gateway extends WC_Payment_Gateway {
 
             return array(
                 'result' => 'success',
-                'redirectUrl' => $result['redirectUrl']
+                'redirectUrl' => $result['redirectUrl'],
+                'urls' => [
+                    'success' => $success,
+                    'failure' => $failure
+                ]
             );
         } catch (Error $e) {
             return array(

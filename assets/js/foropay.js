@@ -9,7 +9,7 @@ $checkout_form.on( 'checkout_place_order', function() {
         return false;
     }
 
-    const foropay = new window.ForopayApi()    
+    const foropay = new window.ForopayApi()
     const $payment_method = jQuery( 'form.checkout input[name="payment_method"]:checked' ).val();
 
     function scrollToNotices() {
@@ -45,9 +45,20 @@ $checkout_form.on( 'checkout_place_order', function() {
         }
     }
 
-    function pay(redirectUrl) {
+    function pay(result) {
+        const { redirectUrl, urls } = result
         if (wc_foropay_params.integration_type === 'popup') {
             foropay.openPopup(redirectUrl)
+            foropay.on('close', ({ status }) => {
+                switch (status) {
+                    case 'success':
+                        window.location.href = urls.success
+                        break
+                    case 'failure':
+                        window.location.href = urls.failure
+                        break
+                }
+            })
         } else {
             window.location.href = redirectUrl
         }
@@ -66,7 +77,7 @@ $checkout_form.on( 'checkout_place_order', function() {
                     if(result.result == 'success') {
                         $checkout_form.removeClass( 'processing' ).unblock();
                         jQuery.unblockUI();
-                        pay(result.redirectUrl);
+                        pay(result);
                         return;
                     }
 
