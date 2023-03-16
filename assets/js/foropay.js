@@ -49,7 +49,7 @@ $checkout_form.on( 'checkout_place_order', function() {
         const { redirectUrl, urls } = result
         if (wc_foropay_params.integration_type === 'popup') {
             foropay.openPopup(redirectUrl)
-            foropay.on('close', ({ status }) => {
+            foropay.on('CLOSE_POPUP', ({ status }) => {
                 switch (status) {
                     case 'success':
                         window.location.href = urls.success
