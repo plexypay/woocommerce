@@ -1,0 +1,16 @@
+{
+    "version": "1.0.0",
+    "name": "plexypay/woocommerce",
+    "description": "PlexyPay payments gateway for Woocommerce",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nurbol Sarsenbayev",
+            "email": "nurbol.sarsenbayev@plexypay.com"
+        }
+    ],
+    "require": {
+        "plexypay/plexypay-sdk-php": "^1.0"
+    }
+}
