@@ -9,7 +9,7 @@ $checkout_form.on( 'checkout_place_order', function() {
         return false;
     }
 
-    const plexypay = new window.PlexypayApi()
+    const plexypay = new window.PlexyPayApi()
     const $payment_method = jQuery( 'form.checkout input[name="payment_method"]:checked' ).val();
 
     function scrollToNotices() {
